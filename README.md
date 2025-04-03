@@ -4,7 +4,7 @@
 ## 환경
 - OS: `Windows 10/11 Home/Pro`
 - .Net SDK: `9.0.200`
-- IDE: Visual Studio 2022
+- IDE: `Visual Studio 2022`
 
 ## 목표
 - 대표적인 예시 정리 및 이를 코드로 실험
