@@ -11,6 +11,7 @@
 - `Windows 10/11 Home/Pro`
 - [Git](https://git-scm.com/)
 - [Python 3.x](https://www.python.org/downloads/)
+  - click 패키지 필요 (`pip install click`)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/ko/downloads/)
 
 ## 사용 툴
