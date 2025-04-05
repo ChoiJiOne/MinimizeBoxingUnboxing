@@ -2,9 +2,9 @@ import click
 import traceback
 from pathlib import Path
 
-from command_utils import run_command
-from config import ProjectConfig
-from logger import Logger
+from core.command_utils import run_command
+from core.config import ProjectConfig
+from core.logger import Logger
 
 @click.group()
 def cli():
