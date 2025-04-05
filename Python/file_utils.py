@@ -1,5 +1,9 @@
 from pathlib import Path
 
+def is_valid_path(path):
+    target_path = Path(path)
+    return target_path.exists()
+
 def is_directory(path):
     target_path = Path(path)
     return target_path.exists() and target_path.is_dir()
