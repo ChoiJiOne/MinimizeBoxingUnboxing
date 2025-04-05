@@ -18,7 +18,13 @@
 - [ILSpy](https://github.com/icsharpcode/ILSpy)
 - [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet)
 
+
+## 문서
+- [박싱과 언박싱을 최소화하라](./Docs/MinimizeBoxingUnboxing.md)
+- [제네릭이 아닌 컬렉션을 사용하면 안 됨](./Docs/NonGenericCollectionsShouldNotBeUsed.md)
+
 ## 참조
 - Effective C# Item 9: Minimize Boxing and Unboxing
 - [값 형식 - C# Reference](https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/builtin-types/value-types)
 - [참조 형식 - C# Reference](https://learn.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/reference-types)
+- [Non-generic collections shouldn't be used](https://github.com/dotnet/platform-compat/blob/master/docs/DE0006.md)
