@@ -1,8 +1,10 @@
 import click
 import traceback
+import subprocess
 
 from config import ProjectConfig
 from logger import Logger
+from command_utils import run_command
 
 @click.group()
 def cli():
@@ -17,6 +19,10 @@ def create_csharp_project(**kwargs):
     try:
         config = ProjectConfig(**kwargs)
         logger = Logger(config.log_path)
+
+        command = f"dotnet new console --language \"C#\" --name {config.project_name}"
+        run_command(logger, command)
+        
     except FileNotFoundError as e:
         click.echo(f"[ERROR] Invalid log path: {e}")
         traceback.print_exc()
