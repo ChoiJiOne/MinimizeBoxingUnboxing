@@ -22,7 +22,7 @@
 ## 문서
 - [박싱과 언박싱을 최소화하라](./Docs/MinimizeBoxingUnboxing.md)
 - [제네릭이 아닌 컬렉션을 사용하면 안 됨](./Docs/NonGenericCollectionsShouldNotBeUsed.md)
-- [#에서는 문자열 연결(string concatenation)과 보간(string interpolation) 시에 항상 박싱(boxing)이 발생하나요?](./Docs/BoxingInCsharpStrings.md)
+- [C#에서는 문자열 연결(string concatenation)과 보간(string interpolation) 시에 항상 박싱(boxing)이 발생하나요?](./Docs/BoxingInCsharpStrings.md)
 
 ## 참조
 - Effective C# Item 9: Minimize Boxing and Unboxing
