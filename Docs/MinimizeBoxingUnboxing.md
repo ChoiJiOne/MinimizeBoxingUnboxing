@@ -264,6 +264,29 @@
   - 실제 출력 결과: `Old Name`
   - `Person`이 `class`라면 기대한 출력값이 출력됨
 
+### 값 타입을 인터페이스 타입으로 변환 시 박싱 수행
+- 값 타입을 인터페이스 타입으로 변환 시 박싱 수행
+  ```CSharp
+  using System;
+
+  class Program
+  {
+      static void Main(string[] args)
+      {
+          int number = 42;
+          IFormattable formattable = number;
+          Console.WriteLine($"{formattable}");
+      }
+  }
+  ```
+
+  ```CSharp
+  // IFormattable value = 42;
+  IL_0000: ldc.i4.s 42
+  IL_0002: box [System.Runtime]System.Int32
+  IL_0007: stloc.0
+  ```
+
 ### BenchmarkDotNet으로 박싱 성능 확인
 - 성능 확인 테스트 코드
 ```CSharp
