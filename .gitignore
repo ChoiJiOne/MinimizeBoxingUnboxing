@@ -4,3 +4,4 @@ bin
 .vscode
 Log
 __pycache__
+BenchmarkDotNet.Artifacts
