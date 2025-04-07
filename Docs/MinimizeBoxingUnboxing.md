@@ -264,5 +264,66 @@
   - 실제 출력 결과: `Old Name`
   - `Person`이 `class`라면 기대한 출력값이 출력됨
 
+### BenchmarkDotNet으로 박싱 성능 확인
+- 성능 확인 테스트 코드
+```CSharp
+using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
+
+[MemoryDiagnoser]
+[ShortRunJob]
+public class BoxingBenchmarks
+{
+    private int _iterationCount = 1000000;
+
+    [Benchmark]
+    public int WithBoxing()
+    {
+        object boxed;
+        int sum = 0;
+        for (int i = 0; i < _iterationCount; i++)
+        {
+            boxed = i;
+            sum += (int)boxed;
+        }
+        return sum;
+    }
+
+    [Benchmark]
+    public int WithoutBoxing()
+    {
+        int sum = 0;
+        for (int i = 0; i < _iterationCount; i++)
+        {
+            sum += i;
+        }
+        return sum;
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        BenchmarkRunner.Run<BoxingBenchmarks>();
+    }
+}
+```
+
+- 실행 결과
+  | Method        | Mean       | Error     | StdDev   | Gen0      | Allocated  |
+  |-------------- |-----------:|----------:|---------:|----------:|-----------:|
+  | WithBoxing    | 1,944.7 us | 325.34 us | 17.83 us | 1433.5938 | 24000001 B |
+  | WithoutBoxing |   208.2 us |  14.16 us |  0.78 us |         - |          - |
+
+  | 용어 | 설명 |
+  |--------------|--------------|
+  | **Mean**     | 모든 측정값의 산술 평균                                                        |
+  | **Error**    | 99.9% 신뢰 구간의 반값 (오차 범위)                                              |
+  | **StdDev**   | 표준 편차 (측정값들의 분산 정도)                                                |
+  | **Gen0**     | GC 세대 0의 수집 횟수 (1000회 기준)                                             |
+  | **Allocated**| 단일 연산에서 할당된 메모리 (관리 힙 기준, 1KB = 1024바이트로 계산)              |
+  | **1 us**     | 1 마이크로초 = 0.000001초 (벤치마크 시간 단위)                                  |
+
 ## 결론
 - 값 타입을 System.Object 타입이나 인터페이스 타입으로 변경하는 코드는 가능한 작성하지 말아야 함
