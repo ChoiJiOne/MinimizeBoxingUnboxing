@@ -12,7 +12,6 @@ public struct Person
     }
 }
 
-
 class Program
 {
     static void Main(string[] args)

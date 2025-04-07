@@ -3,7 +3,7 @@ using BenchmarkDotNet.Running;
 
 [MemoryDiagnoser]
 [ShortRunJob]
-public class BoxingBenchmarks
+class BoxingBenchmarks
 {
     private int _iterationCount = 1000000;
 
@@ -32,9 +32,9 @@ public class BoxingBenchmarks
     }
 }
 
-public class Program
+class Program
 {
-    public static void Main(string[] args)
+    static void Main(string[] args)
     {
         BenchmarkRunner.Run<BoxingBenchmarks>();
     }
