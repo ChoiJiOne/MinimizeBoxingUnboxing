@@ -2,10 +2,9 @@
 - `이펙티브 C# - 아이템 9 : 박싱과 언박싱을 최소화하라` 내용 정리 및 실험 코드 저장소입니다.
 
 ## 목표
-- 대표적인 예시 정리 및 이를 코드로 실험
-- 성능에 미치는 영향을 벤치마크를 통해 확인
-- 메모리 사용량 및 GC(가비지 컬렉션) 동작에 어떤 영향을 주는지 분석
+- 박싱/언박싱 예제 코드 작성
 - 동작 과정을 IL 코드로 분석
+- 성능에 미치는 영향을 벤치마크를 통해 확인
 
 ## 요구 사항
 - `Windows 10/11 Home/Pro`
@@ -17,7 +16,6 @@
 ## 사용 툴
 - [ILSpy](https://github.com/icsharpcode/ILSpy)
 - [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet)
-
 
 ## 문서
 - [박싱과 언박싱을 최소화하라](./Docs/MinimizeBoxingUnboxing.md)
