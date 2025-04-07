@@ -168,7 +168,7 @@
 - 참조 타입(`System.Object`)을 요구하는 곳에 값 타입 사용 → 박싱/언박싱 발생
   - 이때, 컴파일러가 자동으로 박싱/언박싱 코드를 생성
   - 이 과정에서 컴파일러는 경고 메시지를 출력하지 않음
-- .NET Framework의의 `System.Object` 타입 객체를 요구하는 경우 → 박싱/언박싱 발생
+- .NET Framework의 일부 API는 `System.Object` 타입 객체를 요구하는 경우 존재 → 박싱/언박싱 발생
   ```CSharp
   static void ShowObject(object obj)
   {
@@ -198,7 +198,7 @@
 - 문자열 보간 시 `string.Format` 사용  → 박싱/언박싱 발생
   - 그러나, `$`를 이용하여 문자열 보간 수행 시 → 박싱/언박싱 발생 x
   - 내부에서 `DefaultInterpolatedStringHandler`의 `AppendFormatted<T>`를 이용해서 박싱 없이 값 타입을 처리
-- 박싱/언박싱 발생
+- `string.Format` 사용
   ```CSharp
   ...
   int firstNumber = 100;
@@ -222,7 +222,7 @@
   IL_002c: stloc.3
   ...
   ```
-- 제너릭을 이용한 박싱/언박싱 회피
+- 보간 문자열 사용
   ```CSharp
   using System;
 
@@ -303,6 +303,7 @@
   ```
   - 기대한 출력 결과: `New Name`
   - 실제 출력 결과: `Old Name`
+  - `Person`이 `class`라면 기대한 출력값이 출력됨
 
 ## 결론
 - 값 타입을 System.Object 타입이나 인터페이스 타입으로 변경하는 코드는 가능한 작성하지 말아야 함
