@@ -83,27 +83,11 @@
 
   ```CSharp
   ...
-  IL_0000: nop
-  // Queue queue = new Queue();
-  IL_0001: newobj instance void [System.Collections.NonGeneric]System.Collections.Queue::.ctor()
-  IL_0006: stloc.0
   // queue.Enqueue(1);
   IL_0007: ldloc.0
   IL_0008: ldc.i4.1
   IL_0009: box [System.Runtime]System.Int32
   IL_000e: callvirt instance void [System.Collections.NonGeneric]System.Collections.Queue::Enqueue(object)
-  // queue.Enqueue(2);
-  IL_0013: nop
-  IL_0014: ldloc.0
-  IL_0015: ldc.i4.2
-  IL_0016: box [System.Runtime]System.Int32
-  IL_001b: callvirt instance void [System.Collections.NonGeneric]System.Collections.Queue::Enqueue(object)
-  // queue.Enqueue(3);
-  IL_0020: nop
-  IL_0021: ldloc.0
-  IL_0022: ldc.i4.3
-  IL_0023: box [System.Runtime]System.Int32
-  IL_0028: callvirt instance void [System.Collections.NonGeneric]System.Collections.Queue::Enqueue(object)
   ...
   ```
 - 제너릭을 이용한 박싱/언박싱 회피
@@ -132,35 +116,10 @@
 
   ```CSharp
   ...
-    // {
-  IL_0000: nop
-  // Queue<int> queue = new Queue<int>();
-  IL_0001: newobj instance void class [System.Collections]System.Collections.Generic.Queue`1<int32>::.ctor()
-  IL_0006: stloc.0
   // queue.Enqueue(1);
   IL_0007: ldloc.0
   IL_0008: ldc.i4.1
   IL_0009: callvirt instance void class [System.Collections]System.Collections.Generic.Queue`1<int32>::Enqueue(!0)
-  // queue.Enqueue(2);
-  IL_000e: nop
-  IL_000f: ldloc.0
-  IL_0010: ldc.i4.2
-  IL_0011: callvirt instance void class [System.Collections]System.Collections.Generic.Queue`1<int32>::Enqueue(!0)
-  // queue.Enqueue(3);
-  IL_0016: nop
-  IL_0017: ldloc.0
-  IL_0018: ldc.i4.3
-  IL_0019: callvirt instance void class [System.Collections]System.Collections.Generic.Queue`1<int32>::Enqueue(!0)
-  // queue.Enqueue(4);
-  IL_001e: nop
-  IL_001f: ldloc.0
-  IL_0020: ldc.i4.4
-  IL_0021: callvirt instance void class [System.Collections]System.Collections.Generic.Queue`1<int32>::Enqueue(!0)
-  // queue.Enqueue(5);
-  IL_0026: nop
-  IL_0027: ldloc.0
-  IL_0028: ldc.i4.5
-  IL_0029: callvirt instance void class [System.Collections]System.Collections.Generic.Queue`1<int32>::Enqueue(!0)
   ...
   ```
 
