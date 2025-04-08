@@ -1,19 +1,19 @@
 # 박싱과 언박싱을 최소화하라
 - 값 타입
-  - 값을 저장할 때 쓰는 저장소
-  - 데이터를 스택(Stack)에 저장
+  - 값 자체를 저장하는 타입
+  - 데이터를 스택(Stack) 메모리에 저장
   - 다른 변수에 할당되거나 메서드의 인수로 전달될 때 해당 값이 복사
   - 한 변수의 값을 변경해도 다른 변수에는 영향을 주지 않음
-  - EX) `int`, `float`, `bool`, `struct` 등등..
+  - ex) `int`, `float`, `bool`, `struct` 등등..
 - 참조 타입
-  - 값을 저장한 위치를 참조하는 방식의 타입
+  - 값을 저장한 위치를 참조하는 타입
   - 데이터를 힙(Heap) 메모리에 저장
   - 다른 변수에 할당되거나 메서드의 인수로 전달될 때 참조 값이 복사
   - 하나를 바꾸면 같은 주소를 참조하는 다른 변수도 영향 받음
-  - EX) `string`, `class`, `interface`, `delegate` 등등...
+  - ex) `string`, `class`, `interface`, `delegate` 등등...
 - .NET Framework
-  - 모든 타입의 최상위 타입을 System.Object로 정의
-  - System.Object는 참조 타입
+  - 모든 타입의 최상위 타입을 `System.Object`로 정의
+  - `System.Object`는 참조 타입
   - 박싱/언박싱을 통해 값 타입과 참조 타입을 이어줌
 - 박싱/언박싱
   - 박싱: 값 타입 객체를 임의의 참조 타입 내부에 포함시키는 방법
@@ -25,21 +25,23 @@
     int unboxedNum = (int)(boxedNum); // 언박싱
     ```
 - 박싱/언박싱은 피하는 게 좋음
-  - 박싱/언박싱 → 성능에 좋지 않은 영향을 미침
-  - 박싱/언박싱을 수행하는 과정에서 임시 객체 생성 → 예상치 못한 버그 발생
+  - 박싱/언박싱 과정에서 힙 메모리 할당 → 성능에 좋지 않은 영향을 미침
+  - 박싱/언박싱 과정에서 임시 객체 생성 → 예상치 못한 버그 발생
 
 ## 코드 예시
 
 ### 박싱/언박싱
-- 간단한 박싱/언박싱 코드
-  - `box`: 박싱 수행
-  - `unbox.any`: 언박싱 수행
+
+#### 예제
+- C# 코드
   ```CSharp
   int number = 100;
   object boxingNumber = (object)(number);
   int unboxingNumber = (int)(boxingNumber);
   ```
-
+- IL 코드
+  - `box`: 박싱 수행 명령어
+  - `unbox.any`: 언박싱 수행 명령어
   ```CSharp
   // int num = 100;
   IL_0001: ldc.i4.s 100
@@ -54,10 +56,13 @@
   IL_0011: stloc.2
   ```
 
-### 제너릭을 이용한 박싱/언박싱 회피
+### 제너릭을 이용한 박싱 회피
 - MS는 제너릭이 아닌 컬렉션을 사용하지 말라고 권장하고 있음
   - 참조: [제너릭이 아닌 컬렉션을 사용하면 안됨](./NonGenericCollectionsShouldNotBeUsed.md)
-- 박싱/언박싱 발생
+
+#### 예제 (제너릭을 사용하지 않는 경우)
+- C# 코드
+  - 제너릭이 아닌 컬렉션을 사용하는 케이스
   ```CSharp
   using System;
   using System.Collections;
@@ -80,7 +85,8 @@
       }
   }
   ```
-
+- IL 코드 일부
+  - Queue에 데이터를 추가하는 과정에서 박싱 수행
   ```CSharp
   ...
   // queue.Enqueue(1);
@@ -90,7 +96,10 @@
   IL_000e: callvirt instance void [System.Collections.NonGeneric]System.Collections.Queue::Enqueue(object)
   ...
   ```
-- 제너릭을 이용한 박싱/언박싱 회피
+
+#### 예제 (제너릭을 사용하는 경우)
+- C# 코드
+  - 제너릭 컬렉션을 사용하는 케이스
   ```CSharp
   using System;
   using System.Collections.Generic;
@@ -113,7 +122,8 @@
       }
   }
   ```
-
+- IL 코드 일부
+  - 값 타입인 경우 박싱을 수행하지 않음
   ```CSharp
   ...
   // queue.Enqueue(1);
@@ -123,11 +133,14 @@
   ...
   ```
 
-### 참조 타입을 요구하는 곳에 값 타입 전달 시 박싱/언박싱 수행
-- 참조 타입(`System.Object`)을 요구하는 곳에 값 타입 사용 → 박싱/언박싱 발생
-  - 이때, 컴파일러가 자동으로 박싱/언박싱 코드를 생성
+### 참조 타입을 요구하는 곳에 값 타입 전달 시 박싱 수행
+- 참조 타입(`System.Object`)을 요구하는 곳에 값 타입 사용 할 경우 → 박싱 발생
+  - 컴파일러가 자동으로 박싱 코드를 생성
   - 이 과정에서 컴파일러는 경고 메시지를 출력하지 않음
-- .NET Framework의 일부 API는 `System.Object` 타입 객체를 요구하는 경우 존재 → 박싱/언박싱 발생
+- .NET Framework의 일부 API는 `System.Object` 타입 객체를 요구하는 경우 존재 → 박싱 발생
+
+####  예제
+- C# 코드
   ```CSharp
   static void ShowObject(object obj)
   {
@@ -139,7 +152,7 @@
   ShowObject(number);
   ...
   ```
-
+- IL 코드 일부
   ```CSharp
   ...
   IL_0000: nop
@@ -153,11 +166,15 @@
   ...
   ```
 
-### 문자열 보간을 이용한 박싱/언박싱 회피
-- 문자열 보간 시 `string.Format` 사용  → 박싱/언박싱 발생
-  - 그러나, `$`를 이용하여 문자열 보간 수행 시 → 박싱/언박싱 발생 x
+### 문자열 보간을 이용한 박싱 회피
+- 문자열 보간 시 `string.Format` 사용  → 박싱 발생
+  - 그러나, `$`를 이용하여 문자열 보간 수행 시 → 박싱 발생 x
   - 내부에서 `DefaultInterpolatedStringHandler`의 `AppendFormatted<T>`를 이용해서 박싱 없이 값 타입을 처리
-- `string.Format` 사용
+
+> 이 부분의 경우, 이펙티브 C# 책에 잘못 설명되어 있다. 아마 책이 오래되어서 발생한 문제로, 해당 문서에는 최신 사항을 반영해서 추가했다.
+  
+#### 예제 (`string.Format` 사용)
+- C# 코드
   ```CSharp
   ...
   int firstNumber = 100;
@@ -167,7 +184,8 @@
   string message = String.Format("A few numbers: {0}, {1}, {2}", firstNumber, secondNumber, thirdNumber);
   ...
   ```
-
+- IL코드 일부
+  - `System.String::Format`의 인자로 `System.Object` 타입을 요구하여 박싱 수행
   ```CSharp
   ...
   IL_0010: ldstr "A few numbers: {0}, {1}, {2}"
@@ -181,7 +199,9 @@
   IL_002c: stloc.3
   ...
   ```
-- 보간 문자열 사용
+
+#### 예제 (보간 문자열 (`$`)사용)
+- C# 코드
   ```CSharp
   using System;
 
@@ -198,7 +218,8 @@
       }
   }
   ```
-
+- IL 코드 일부
+  - `DefaultInterpolatedStringHandler`의 `AppendFormatted<T>`를 이용해서 박싱 없이 값 타입을 처리
   ```CSharp
   ...
   IL_0026: nop
@@ -213,59 +234,66 @@
   IL_003d: ldloca.s 4
   IL_003f: ldloc.1
   IL_0040: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<int32>(!!0)
-  IL_0045: nop
-  IL_0046: ldloca.s 4
-  IL_0048: ldstr ", "
-  IL_004d: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(string)
-  IL_0052: nop
-  IL_0053: ldloca.s 4
-  IL_0055: ldloc.2
-  IL_0056: call instance void [System.Runtime]System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<int32>(!!0)
-  IL_005b: nop
   ...
   ```
 
-### 컬랙션으로부터 값 타입 객체를 가져오면 박싱된 객체의 복사본을 가져옴
+### 컬랙션으로부터 값 타입 객체 참조 시 박싱된 객체 복사본 참조
 - 컬랙션으로부터 객체를 가져오는 경우
   - 박싱된 객체의 복사본 가져옴 → 버그 발생 가능성 높임
-  ```CSharp
-  using System;
-  using System.Collections;
-  using System.Collections.Generic;
 
-  struct Person
-  {
-      public string Name { get; set; }
+#### 예제
 
-      public override string ToString()
-      {
-          return Name;
-      }
-  }
+```CSharp
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
+struct Person
+{
+    public string Name { get; set; }
 
-  class Program
-  {
-      static void Main(string[] args)
-      {
-          List<Person> attendees = new List<Person>();
+    public override string ToString()
+    {
+        return Name;
+    }
+}
 
-          Person person = new Person { Name = "Old Name" };
-          attendees.Add(person);
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<Person> attendees = new List<Person>();
 
-          Person firstPerson = attendees[0];
-          firstPerson.Name = "New Name";
+        Person person = new Person { Name = "Old Name" };
+        attendees.Add(person);
 
-          Console.WriteLine(attendees[0].ToString());
-      }
-  }
+        Person firstPerson = attendees[0];
+        firstPerson.Name = "New Name";
+
+        Console.WriteLine(attendees[0].ToString());
+    }
+}
   ```
-  - 기대한 출력 결과: `New Name`
-  - 실제 출력 결과: `Old Name`
-  - `Person`이 `class`라면 기대한 출력값이 출력됨
+- 기대한 출력 결과: `New Name`
+- 실제 출력 결과: `Old Name`
+
+```CSharps
+...
+Person firstPerson = attendees[0];
+firstPerson.Name = "New Name";
+...
+```
+- `Person firstPerson = attendees[0];` 과정에서 참조가 아닌 Person의 복사본을 가져옴
+- 따라서, `firstPerson.Name = "New Name";`는 복사본의 값을 변경하는 코드임
+- `Person`이 `class`라면 기대한 출력값이 출력됨
 
 ### 값 타입을 인터페이스 타입으로 변환 시 박싱 수행
-- 값 타입을 인터페이스 타입으로 변환 시 박싱 수행
+- 값 타입을 인터페이스 타입으로 변환할 경우 → 박싱 수행
+- 인터페이스는 참조 타입이기 때문에, 값 타입이 인터페이스 타입으로 할당되기 위해서는 힙에 박싱된 객체가 생성되어야 함
+  - 이로 인해 추가적인 메모리 할당과 성능 비용이 발생하며, 다형성 구현 시 주의가 필요함
+
+#### 예제
+- C# 코드
   ```CSharp
   using System;
 
@@ -279,7 +307,7 @@
       }
   }
   ```
-
+- IL 코드
   ```CSharp
   // IFormattable value = 42;
   IL_0000: ldc.i4.s 42
@@ -287,8 +315,11 @@
   IL_0007: stloc.0
   ```
 
-### BenchmarkDotNet으로 박싱 성능 확인
-- 성능 확인 테스트 코드
+### BenchmarkDotNet으로 박싱 성능 측정
+- 성능 측정 테스트 코드
+  - `WithBoxing`: 박싱하며 덧셈 연산 1000000번 수행
+  - `WithoutBoxing`: 박싱하지 않고 덧셈 연산 1000000번 수행
+
 ```CSharp
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
@@ -333,22 +364,30 @@ class Program
 }
 ```
 
-- 실행 결과
-  | Method        | Mean       | Error     | StdDev   | Gen0      | Allocated  |
-  |-------------- |-----------:|----------:|---------:|----------:|-----------:|
-  | WithBoxing    | 1,944.7 us | 325.34 us | 17.83 us | 1433.5938 | 24000001 B |
-  | WithoutBoxing |   208.2 us |  14.16 us |  0.78 us |         - |          - |
+#### 실행 결과
 
-  | 용어 | 설명 |
-  |--------------|--------------|
-  | **Mean**     | 모든 측정값의 산술 평균                                                        |
-  | **Error**    | 99.9% 신뢰 구간의 반값 (오차 범위)                                              |
-  | **StdDev**   | 표준 편차 (측정값들의 분산 정도)                                                |
-  | **Gen0**     | GC 세대 0의 수집 횟수 (1000회 기준)                                             |
-  | **Allocated**| 단일 연산에서 할당된 메모리 (관리 힙 기준, 1KB = 1024바이트로 계산)              |
-  | **1 us**     | 1 마이크로초 = 0.000001초 (벤치마크 시간 단위)                                  |
+| Method        | Mean       | Error     | StdDev   | Gen0      | Allocated  |
+|-------------- |-----------:|----------:|---------:|----------:|-----------:|
+| WithBoxing    | 1,944.7 us | 325.34 us | 17.83 us | 1433.5938 | 24000001 B |
+| WithoutBoxing |   208.2 us |  14.16 us |  0.78 us |         - |          - |
+
+- `WithBoxing` 메서드는 `WithoutBoxing`보다 약 9배 이상 느린 실행 시간을 보임
+- `WithBoxing`은 박싱된 객체를 100만 번 생성하므로, 24MB 이상의 메모리가 할당됨
+- Gen0(GC 0세대 수집)도 1400회 이상 발생 → GC 부담 증가
+- 반면 `WithoutBoxing`은 메모리 할당 없이 연산을 마치고, GC도 발생하지 않음
+- 즉, 박싱은 성능 저하, 메모리 낭비, GC 압박을 모두 유발하는 요인이 될 수 있음
 
 ## 결론
-- 값 타입을 System.Object 타입이나 인터페이스 타입으로 변경하는 코드는 가능한 작성하지 말아야 함
+- 값 타입을 `System.Object` 타입이나 인터페이스 타입으로 변경하는 코드는 가능한 피해야 함
 - 박싱/언박싱은 눈에 띄지 않게 발생하지만, 반복되면 성능 저하와 불필요한 메모리 할당을 초래함
 - 제네릭, 문자열 보간 등을 통해 박싱 발생 지점을 사전에 차단하는 습관이 필요함
+
+
+
+- 박싱과 언박싱은 성능 저하와 메모리 할당 증가의 주요 원인이 될 수 있음
+- 값 타입을 `System.Object`, `interface` 등에 암묵적으로 변환하는 코드는 의도치 않게 박싱을 유발할 수 있으므로 주의 필요
+- 다음과 같은 방식으로 박싱을 피하는 것이 좋음
+  - 제네릭 컬렉션 및 제네릭 메서드 사용
+  - 보간 문자열 ($"") 사용 → string.Format 대신
+  - 값 타입에 인터페이스 할당 피하기
+- 박싱을 최소화하는 코딩 습관은 성능 최적화뿐 아니라 버그 예방 측면에서도 매우 중요함
