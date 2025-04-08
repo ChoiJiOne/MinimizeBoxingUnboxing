@@ -1,4 +1,4 @@
-# [제네릭이 아닌 컬렉션을 사용하면 안 됨](https://github.com/dotnet/platform-compat/blob/master/docs/DE0006.md)
+# 제네릭이 아닌 컬렉션을 사용하면 안 됨
 
 ## 동기
 
@@ -27,3 +27,6 @@
 | ReadOnlyCollectionBase       | `ReadOnlyCollection<T>`                              |
 | SortedList                   | `SortedList<TKey, TValue>`                           |
 | Stack                        | `Stack<T>`                                           |
+
+## 원문
+- [DE0006: Non-generic collections shouldn't be used](https://github.com/dotnet/platform-compat/blob/master/docs/DE0006.md)

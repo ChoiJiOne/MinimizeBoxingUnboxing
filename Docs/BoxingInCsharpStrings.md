@@ -1,4 +1,4 @@
-# [C#에서는 문자열 연결(string concatenation)과 보간(string interpolation) 시에 항상 박싱(boxing)이 발생하나요?](https://pvs-studio.com/en/blog/posts/csharp/1060/)
+# C#에서는 문자열 연결(string concatenation)과 보간(string interpolation) 시에 항상 박싱(boxing)이 발생하나요?
 
 C# 개발자들은 "박싱(Boxing)"이라는 용어에 익숙합니다. 이 현상은 명확하게 드러날 수도 있고, 눈치채지 못할 수도 있습니다. 예를 들어, 값 형식(value type)과 문자열(string)을 더할 경우 박싱이 발생할 수도 있고, 발생하지 않을 수도 있습니다. 일종의 "슈뢰딩거의 박싱(Schrödinger's boxing)" 같은 것이죠. 여기서는 이러한 불확실성을 다뤄보려고 합니다.
 
@@ -228,3 +228,7 @@ DefaultInterpolatedStringHandler::AppendFormatted<int32>(!!0)
 일반적으로, 예전 버전의 컴파일러를 사용할 경우 문자열 연결 시 박싱이 실제로 발생합니다. 따라서 ToString 호출을 사용하는 것이 좋은 방법입니다. 물론, 최신 버전의 컴파일러에서는 어차피 박싱이 발생하지 않으므로 걱정할 필요는 없습니다. (이제 면접에서 이런 걸로 지원자 괴롭히는 사람은 없겠죠? ^^)
 
 하지만 프로젝트의 타겟이 .NET 6 이상일 때만, 문자열 보간(interpolation)은 박싱으로부터 안전합니다. 그 외의 경우에는 보간 요소에 대해 ToString을 명시적으로 호출하는 것이 꽤 유용할 수 있습니다.
+
+
+## 원문
+- [Does C# always have boxing with string concatenation and interpolation?](https://pvs-studio.com/en/blog/posts/csharp/1060/)
