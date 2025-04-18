@@ -17,7 +17,7 @@
 - [ILSpy](https://github.com/icsharpcode/ILSpy)
 - [BenchmarkDotNet](https://github.com/dotnet/BenchmarkDotNet)
 
-## `이펙티브 C# - 아이템 9 : 박싱과 언박싱을 최소화하라` 내용 정리 문서
+## 내용 정리 문서
 - [박싱과 언박싱을 최소화하라](./Docs/MinimizeBoxingUnboxing.md)
 
 ## 참조 문서
