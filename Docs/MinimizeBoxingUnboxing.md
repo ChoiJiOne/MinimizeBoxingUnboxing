@@ -19,6 +19,7 @@
   - 박싱: 값 타입 객체를 임의의 참조 타입 내부에 포함시키는 방법
     - 즉, `int`, `bool`, `struct` 같은 값 타입을 `object` 타입으로 포장
   - 언박싱: 박싱되어 있는 참조 타입의 객체로부터 값 타입 객체의 복사본을 가져오는 방법
+  - [예시 코드](./../01.BoxingUnboxing/Program.cs)
     ```CSharp
     int num = 100;
     object boxedNum = num; // 박싱
@@ -32,7 +33,7 @@
 
 ### 박싱/언박싱
 
-#### 예제
+#### [예제](./../01.BoxingUnboxing/Program.cs)
 - C# 코드
   ```CSharp
   int number = 100;
@@ -60,7 +61,7 @@
 - MS는 제너릭이 아닌 컬렉션을 사용하지 말라고 권장하고 있음
   - 참조: [제너릭이 아닌 컬렉션을 사용하면 안됨](./NonGenericCollectionsShouldNotBeUsed.md)
 
-#### 예제 (제너릭을 사용하지 않는 경우)
+#### [예제 (제너릭을 사용하지 않는 경우)](./../03.NonGenericCollections/Program.cs)
 - C# 코드
   - 제너릭이 아닌 컬렉션을 사용하는 케이스
   ```CSharp
@@ -97,7 +98,7 @@
   ...
   ```
 
-#### 예제 (제너릭을 사용하는 경우)
+#### [예제 (제너릭을 사용하는 경우)](./../04.GenericCollections/Program.cs)
 - C# 코드
   - 제너릭 컬렉션을 사용하는 케이스
   ```CSharp
@@ -139,7 +140,7 @@
   - 이 과정에서 컴파일러는 경고 메시지를 출력하지 않음
 - .NET Framework의 일부 API는 `System.Object` 타입 객체를 요구하는 경우 존재 → 박싱 발생
 
-####  예제
+#### [예제](./../05.ValueToObject/Program.cs)
 - C# 코드
   ```CSharp
   static void ShowObject(object obj)
@@ -173,7 +174,7 @@
 
 > 이 부분의 경우, 이펙티브 C# 책에 잘못 설명되어 있다. 아마 책이 오래되어서 발생한 문제로, 해당 문서에는 최신 사항을 반영해서 추가
   
-#### 예제 (`string.Format` 사용)
+#### [예제 (`string.Format` 사용)](./../07.StringInterpolation/Program.cs)
 - C# 코드
   ```CSharp
   ...
@@ -200,7 +201,7 @@
   ...
   ```
 
-#### 예제 (보간 문자열 (`$`)사용)
+#### [예제 (보간 문자열 (`$`)사용)](./../06.StringInterpolation/Program.cs)
 - C# 코드
   ```CSharp
   using System;
@@ -241,7 +242,7 @@
 - 컬랙션으로부터 객체를 가져오는 경우
   - 박싱된 객체의 복사본 가져옴 → 버그 발생 가능성 높임
 
-#### 예제
+#### [예제](./../08.StructCopy/Program.cs)
 
 ```CSharp
 using System;
@@ -292,7 +293,7 @@ firstPerson.Name = "New Name";
 - 인터페이스는 참조 타입이기 때문에, 값 타입이 인터페이스 타입으로 할당되기 위해서는 힙에 박싱된 객체가 생성되어야 함
   - 이로 인해 추가적인 메모리 할당과 성능 비용이 발생하며, 다형성 구현 시 주의가 필요함
 
-#### 예제
+#### [예제](./../10.InterfaceBoxing/Program.cs)
 - C# 코드
   ```CSharp
   using System;
@@ -315,7 +316,7 @@ firstPerson.Name = "New Name";
   IL_0007: stloc.0
   ```
 
-### BenchmarkDotNet으로 박싱 성능 측정
+### [BenchmarkDotNet으로 박싱 성능 측정](./../09.BoxingBenchmark/Program.cs)
 - 성능 측정 테스트 코드
   - `WithBoxing`: 박싱하며 덧셈 연산 1000000번 수행
   - `WithoutBoxing`: 박싱하지 않고 덧셈 연산 1000000번 수행
