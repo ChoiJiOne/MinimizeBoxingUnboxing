@@ -7,7 +7,7 @@
 - 성능에 미치는 영향을 벤치마크를 통해 확인
 
 ## 요구 사항
-- `Windows 10/11 Home/Pro`
+- Windows 10/11 Home/Pro
 - [Git](https://git-scm.com/)
 - [Python 3.x](https://www.python.org/downloads/)
   - click 패키지 필요 (`pip install click`)
