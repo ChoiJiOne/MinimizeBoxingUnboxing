@@ -1,4 +1,4 @@
-# MinimizeBoxingUnboxing.CSharp
+# MinimizeBoxingUnboxing
 - `이펙티브 C# 아이템 9 : 박싱과 언박싱을 최소화하라` 내용 정리 및 코드 저장소입니다.
 
 ## 목표
